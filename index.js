@@ -18,6 +18,12 @@ handlers.ping = (data, callback) => {
   callback(200)
 }
 
+// Hello handler
+handlers.hello = (data, callback) => {
+  // Callback a http status code, and a payload object
+  callback(200, { message: 'Greetings from Paris!' })
+}
+
 handlers.notFound = (data, callback) => {
   // Callback a http status code, and a payload object
   callback(404)
@@ -25,7 +31,8 @@ handlers.notFound = (data, callback) => {
 
 // Define a request router
 const router = {
-  ping: handlers.ping
+  ping: handlers.ping,
+  hello: handlers.hello,
 }
 
 // All thes server logic for both http and https
