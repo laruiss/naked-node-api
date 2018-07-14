@@ -1,0 +1,11 @@
+{
+  "name": "app",
+  "version": "1.0.0",
+  "description": "A node app without any 3rd party lib",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Stanislas Ormières",
+  "license": "ISC"
+}
