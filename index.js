@@ -4,6 +4,26 @@ const { StringDecoder } = require('string_decoder')
 
 const port = 3000
 
+// Define the handlers
+const handlers = {}
+
+// Sample handler
+
+handlers.sample = (data, callback) => {
+  // Callback a http status code, and a payload object
+  callback(406, { name: 'sample handler'})
+}
+
+handlers.notFound = (data, callback) => {
+  // Callback a http status code, and a payload object
+  callback(404)
+}
+
+// Define a request router
+const router = {
+  sample: handlers.sample
+}
+
 // Respond to all request with a string
 const server = http.createServer((req, res) => {
   // Get the URL and parse it
@@ -32,11 +52,40 @@ const server = http.createServer((req, res) => {
   req.on('end', () => {
     buffer += decoder.end()
 
-    // Send the response
-    res.end("Hello World!\n")
+    // Choose the appropriate handler
+    const chosenHandler = typeof(router[trimmedPath]) !== 'undefined'
+      ? router[trimmedPath]
+      : handlers.notFound
 
-    // Log the request path
-    console.log(method, headers, '"' + trimmedPath + '"', queryStringObject, buffer)
+    // Construct the data object
+    const data = {
+      trimmedPath,
+      queryStringObject,
+      method,
+      headers,
+      payload: buffer,
+    }
+
+    // Route the request to the chosen handler
+    chosenHandler(data, (statusCode, payload) => {
+      // Use the status code called back by the handler
+      statusCode = typeof(statusCode) === 'number'
+        ? statusCode
+        : 200
+
+      // Use the payload called back by the handler, or default to {}
+      const usedPayload = typeof(payload) === 'object' ? payload : {}
+
+      // Convert the payload to a string
+      const payloadString = JSON.stringify(usedPayload)
+      
+      // Send the response
+      res.writeHead(statusCode)
+      res.end(payloadString)
+
+      // Log the request path
+      console.log('Returning', statusCode, payloadString)
+    })
   })
 
 })
