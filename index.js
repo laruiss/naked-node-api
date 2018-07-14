@@ -25,7 +25,7 @@ handlers.hello = (data, callback) => {
 }
 
 handlers.notFound = (data, callback) => {
-  // Callback a http status code, and a payload object
+  // Callback a http status code, and no payload object
   callback(404)
 }
 
