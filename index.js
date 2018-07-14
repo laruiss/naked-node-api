@@ -18,11 +18,14 @@ const server = http.createServer((req, res) => {
   // Get the method
   const method = req.method.toLowerCase()
 
+  // Get the headers as an object
+  const headers = req.headers
+
   // Send the response
   res.end("Hello World!\n")
 
   // Log the request path
-  console.log(method, '"' + trimmedPath + '"', queryStringObject)
+  console.log(method, headers, '"' + trimmedPath + '"', queryStringObject)
 })
 
 // Start listen on 3000
