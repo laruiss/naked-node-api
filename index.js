@@ -2,7 +2,9 @@ const http = require('http')
 const url = require('url')
 const { StringDecoder } = require('string_decoder')
 
-const port = 3000
+const config = require('./config')
+
+const port = config.port
 
 // Define the handlers
 const handlers = {}
@@ -93,5 +95,5 @@ const server = http.createServer((req, res) => {
 
 // Start listen on 3000
 server.listen(port, () => {
-  console.log("Listening on 3000")
+  console.log("Listening on", port)
 })
