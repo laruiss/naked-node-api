@@ -80,6 +80,7 @@ const server = http.createServer((req, res) => {
       const payloadString = JSON.stringify(usedPayload)
       
       // Send the response
+      res.setHeader('Content-Type', 'application/json')
       res.writeHead(statusCode)
       res.end(payloadString)
 
