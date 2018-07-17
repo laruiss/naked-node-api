@@ -7,7 +7,7 @@ const { StringDecoder } = require('string_decoder')
 const handlers = require('./lib/handlers')
 const helpers = require('./lib/helpers')
 
-const config = require('./config')
+const config = require('./lib/config')
 
 const httpPort = config.httpPort
 const httpsPort = config.httpsPort
