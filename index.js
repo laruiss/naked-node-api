@@ -3,37 +3,19 @@ const https = require('https')
 const url = require('url')
 const fs = require('fs')
 const { StringDecoder } = require('string_decoder')
-const _data = require('./lib/data')
+
+const handlers = require('./lib/handlers')
+const helpers = require('./lib/helpers')
 
 const config = require('./config')
 
 const httpPort = config.httpPort
 const httpsPort = config.httpsPort
 
-// Define the handlers
-const handlers = {}
-
-// Ping handler
-handlers.ping = (data, callback) => {
-  // Callback a http status code, and a payload object
-  callback(200)
-}
-
-// Hello handler
-handlers.hello = (data, callback) => {
-  // Callback a http status code, and a payload object
-  callback(200, { message: 'Greetings from Paris!' })
-}
-
-handlers.notFound = (data, callback) => {
-  // Callback a http status code, and no payload object
-  callback(404)
-}
-
 // Define a request router
 const router = {
   ping: handlers.ping,
-  hello: handlers.hello,
+  users: handlers.users,
 }
 
 // All thes server logic for both http and https
@@ -75,7 +57,7 @@ const unifiedServer = (req, res) => {
         queryStringObject,
         method,
         headers,
-        payload: buffer,
+        payload: helpers.parseJsonToObject(buffer),
       }
   
       // Route the request to the chosen handler
