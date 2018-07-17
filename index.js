@@ -3,6 +3,7 @@ const https = require('https')
 const url = require('url')
 const fs = require('fs')
 const { StringDecoder } = require('string_decoder')
+const _data = require('./lib/data')
 
 const config = require('./config')
 
