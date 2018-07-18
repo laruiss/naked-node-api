@@ -16,6 +16,7 @@ const httpsPort = config.httpsPort
 const router = {
   ping: handlers.ping,
   users: handlers.users,
+  tokens: handlers.tokens,
 }
 
 // All thes server logic for both http and https
