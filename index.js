@@ -13,11 +13,7 @@ const httpPort = config.httpPort
 const httpsPort = config.httpsPort
 
 // Define a request router
-const router = {
-  ping: handlers.ping,
-  users: handlers.users,
-  tokens: handlers.tokens,
-}
+const router = handlers
 
 // All thes server logic for both http and https
 const unifiedServer = (req, res) => {
@@ -43,7 +39,7 @@ const unifiedServer = (req, res) => {
     req.on('data', (data) => {
       buffer += decoder.write(data)
     })
-  
+
     req.on('end', () => {
       buffer += decoder.end()
   
@@ -60,7 +56,7 @@ const unifiedServer = (req, res) => {
         headers,
         payload: helpers.parseJsonToObject(buffer),
       }
-  
+
       // Route the request to the chosen handler
       chosenHandler(data, (statusCode, payload) => {
         // Use the status code called back by the handler
