@@ -23,6 +23,8 @@ const unifiedServer = (req, res) => {
     // Get the path
     const path = parsedUrl.pathname
     const trimmedPath = path.replace(/^\/+|\/+$/g, '')
+
+    const firtPartOfPath = trimmedPath.split('/')[0]
   
     // Get the query string as an object
     const queryStringObject = parsedUrl.query
@@ -44,8 +46,8 @@ const unifiedServer = (req, res) => {
       buffer += decoder.end()
   
       // Choose the appropriate handler
-      const chosenHandler = typeof(router[trimmedPath]) !== 'undefined'
-        ? router[trimmedPath]
+      const chosenHandler = typeof(router[firtPartOfPath]) !== 'undefined'
+        ? router[firtPartOfPath]
         : handlers.notFound
   
       // Construct the data object
